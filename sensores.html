@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Sensores</title>
+	</head>
+	<body>
+		<form action="javascript:void(0);" onsubmit="javascript:enviar();">
+			Sensor de temperatura: <input type="label" id="temperatura" /><br />
+			Sensor de luminosidad: <input type="label" id="luminosidad" /><br />
+			<input type="submit" value="Calcular" />
+		</form>
+		<div id="resultados"></div>
+	</body>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		function actualizarLista(usuarios){
+			var listContainer = document.getElementById('resultados');
+			listContainer.innerHTML = '';
+			var listElement = document.createElement('ul');
+			listContainer.appendChild(listElement);
+			var num = usuarios.length;
+			for(var i=0; i<num; i++) {
+	            var listItem = document.createElement('li');
+	            listItem.innerHTML = JSON.stringify(usuarios[i]);
+	            listElement.appendChild(listItem);
+	        }
+	    }
+
+	    function enviar(){
+
+	    	console.log("esto se envia" + document.getElementById("temperatura").value);
+	    }
+	    
+		var serviceURL = document.URL;
+		var socket = io.connect(serviceURL);
+		
+		socket.on('my-address', function(data) {
+			var d = new Date();
+			socket.emit('poner', {host:data.host, port:data.port, time:d});
+			socket.emit('obtener', {host: data.address});
+		});
+		socket.on('obtener', function(data) {
+			actualizarLista(data);
+		});
+		socket.on('disconnect', function() {
+			actualizarLista({});
+		});
+	</script>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "domotica",
+  "version": "1.0.0",
+  "description": "aplicacion de la practica 4 de dsd mayo 2017",
+  "main": "servidor.js",
+  "scripts": {
+    "start": "nodemon servidor.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "frenazo",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
