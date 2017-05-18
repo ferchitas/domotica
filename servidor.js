@@ -8,31 +8,33 @@ app.use(express.static('publico'));
 var temperaturas =[{
 	id:1,
 	fecha: new Date(),
-	temperatura: 1
+	temperatura: 21	
 }];
 
 var luminosidades =[{
 	id:1,
 	fecha: new Date(),
-	luminosidad: 1
+	luminosidad: 14
 }];
 
 io.on('connection', function(socket){
 
-	console.log("alguien se ha conectado");
-	//sensor de temperatura
-	socket.on('temperatura-sensor-actual', function (data) {
-		// aqui guardamos los datos en la bdd, de momento utilizamos el array
-		temperaturas.push(data);
-		console.log(temperaturas);
-	});
+	console.log("alguien se ha conectado" + socket.id);
+	
 	//sensor de luminosidad
 	socket.on('luminosidad-sensor-actual', function (data) {
 		// aqui guardamos los datos en la bdd, de momento utilizamos el array
 		luminosidades.push(data);
-		console.log(luminosidades);
-		console.log("esto se ejecuta");
+		console.log("f2");
+		socket.emit('luminosidad-historico-sensor', luminosidades);
 	});
+	//sensor de temperatura
+	socket.on('temperatura-sensor-actual', function (data) {
+		// aqui guardamos los datos en la bdd, de momento utilizamos el array
+		temperaturas.push(data);
+		socket.emit('temperatura-historico-sensor', temperaturas);
+	});
+	
 
 });
 
