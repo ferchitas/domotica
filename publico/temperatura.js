@@ -1,11 +1,9 @@
 var socket = io.connect('http://localhost:8080', {'forceNew': true});
 
-/*
-socket.on('messages', function (data) {
-	console.log(data);
-	render(data);
+socket.on('temperatura-historico-sensor', function (data) {
+	renderTemperatura(data);
+	console.log(socket.id);
 });
-*/
 
 function mandarTemperatura(event) {
 	var payload = {
@@ -16,27 +14,16 @@ function mandarTemperatura(event) {
 	return false;
 }
 
-/*
-function render(data) {
+
+function renderTemperatura(data) {
+	console.log("f3");
 	var html = data.map(function (data, index) {
 		return(`<div">
-				<strong>${data.author}</strong>
-				<em>${data.text}</em>
+				<strong>${data.fecha}</strong>
+				<em>${data.temperatura}</em>
 				<br/>
 			</div>`); 
 	}).join(" ");
 
-	document.getElementById('message').innerHTML = html;
+	document.getElementById('historicoTemperatura').innerHTML = html;
 }
-
-function addMessage(event) {
-	var payload = {
-
-		author: document.getElementById('username').value,
-		text: document.getElementById('text').value
-
-	};
-	socket.emit('new-message', payload);
-	return false;
-}
-*/

@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Servidor</title>
+
+		<style type="text/css">
+			#wrap {
+			   width:100%;
+			   margin:0 auto;
+			}
+			#left_col {
+			   float:left;
+			   width:50%;
+			}
+			#right_col {
+			   float:right;
+			   width:50%;
+			}
+		</style>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="luminosidad.js"></script>
+		<script src="temperatura.js"></script>
+	</head>
+	<body>
+		<h1>Servidor</h1>
+		<form onsubmit="return mandarLuminosidad(this)">
+			<input type="text" id="luminosidad" placeholder="luminosidad">
+			<input type="submit" value="Enviar">
+		</form>
+		<form onsubmit="return mandarTemperatura(this)">
+			<input type="text" id="temperatura" placeholder="temperatura">
+			<input type="submit" value="Enviar">
+		</form>
+		<div id="wrap">
+		    <div id="left_col">
+				<h2>historico de luminosidad</h2>
+				<div id="historicoLuminosidad"></div>
+		    </div>
+		    <div id="right_col">
+		    	<h2>historico de temperaturas</h2>
+				<div id="historicoTemperatura"></div>
+		    </div>
+		</div>
+		
+		
+		<br/>
+	</body>
+</html>
