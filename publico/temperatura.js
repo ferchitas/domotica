@@ -1,11 +1,22 @@
 var socket = io.connect('http://localhost:8080', {'forceNew': true});
 
-
+/*
 socket.on('messages', function (data) {
 	console.log(data);
 	render(data);
 });
+*/
 
+function mandarTemperatura(event) {
+	var payload = {
+		temperatura: document.getElementById('temperatura').value,
+		fecha: new Date()
+	};
+	socket.emit('temperatura-sensor-actual', payload);
+	return false;
+}
+
+/*
 function render(data) {
 	var html = data.map(function (data, index) {
 		return(`<div">
@@ -28,3 +39,4 @@ function addMessage(event) {
 	socket.emit('new-message', payload);
 	return false;
 }
+*/
