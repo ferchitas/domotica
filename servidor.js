@@ -1,4 +1,4 @@
-var express = require('express')
+var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io').listen(http);
@@ -17,6 +17,12 @@ var luminosidades =[{
 	luminosidad: 14
 }];
 
+var estadosPersiana =[{
+	id: 1,
+	fecha: new Date(),
+	estado: true
+}];
+
 io.on('connection', function(socket){
 
 	console.log("alguien se ha conectado" + socket.id);
@@ -25,7 +31,6 @@ io.on('connection', function(socket){
 	socket.on('luminosidad-sensor-actual', function (data) {
 		// aqui guardamos los datos en la bdd, de momento utilizamos el array
 		luminosidades.push(data);
-		console.log("f2");
 		socket.emit('luminosidad-historico-sensor', luminosidades);
 	});
 	//sensor de temperatura
@@ -34,8 +39,12 @@ io.on('connection', function(socket){
 		temperaturas.push(data);
 		socket.emit('temperatura-historico-sensor', temperaturas);
 	});
-	
-
+	//control de la persiana
+	socket.on('usuarios-estado-persiana', function (data) {
+		//mostramos como esta la persiana
+		estadosPersiana.push(data);
+		io.sockets.emit('estado-historico-persiana', estadosPersiana);
+	});
 });
 
 http.listen(8080, function () {

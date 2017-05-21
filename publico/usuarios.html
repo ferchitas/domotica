@@ -2,10 +2,22 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Usuarios</title>
+		<link rel="stylesheet" type="text/css" href="css/switch.css" media="screen" />
 		<script src="/socket.io/socket.io.js"></script>
-		<script src="main.js"></script>
+		<script src="usuarios.js"></script>
 	</head>
 	<body>
 		<h1>Usuarios</h1>
+		<form onsubmit="return cambiar(this)">
+		<input type="submit" value="Enviar">
+			<!-- Rounded switch -->
+			<label class="switch">
+			  <input type="checkbox" id="persianaCheckBox">
+			  <div class="slider round"></div>
+			</label>
+
+		<form onsubmit="return mandarTemperatura(this)">
+			<input type="text" id="temperatura" placeholder="temperatura">
+			<input type="submit" value="Enviar">
 	</body>
 </html>
