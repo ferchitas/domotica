@@ -2,22 +2,86 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Usuarios</title>
+		<style type="text/css">
+			#wrap {
+			   width:100%;
+			   margin:0 auto;
+			}
+			#left_col {
+			   float:left;
+			   width:33%;
+			}
+			#center_col {
+			   float:left;
+			   width:33%;
+			}
+			#right_col {
+			   float:right;
+			   width:33%;
+			}
+			#first_col {
+			   float:right;
+			   width:50%;
+			}
+			#second_col {
+			   float:right;
+			   width:50%;
+			}
+
+		</style>
 		<link rel="stylesheet" type="text/css" href="css/switch.css" media="screen" />
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="usuarios.js"></script>
 	</head>
 	<body>
 		<h1>Usuarios</h1>
-		<form onsubmit="return cambiar(this)">
-		<input type="submit" value="Enviar">
-			<!-- Rounded switch -->
-			<label class="switch">
-			  <input type="checkbox" id="persianaCheckBox">
-			  <div class="slider round"></div>
-			</label>
-
-		<form onsubmit="return mandarTemperatura(this)">
-			<input type="text" id="temperatura" placeholder="temperatura">
-			<input type="submit" value="Enviar">
+		<div id="wrap">
+		    <div id="left_col">
+		    	<h2>Persiana y aire acondicionado</h2>
+				<form onsubmit="return cambiarPersiana(this)">
+				<input type="submit" value="Enviar">
+					<!-- Rounded switch -->
+					<label class="switch">
+					  <input type="checkbox" id="persianaCheckBox">
+					  <div class="slider round"></div>
+					</label>
+				</form>
+				<form onsubmit="return cambiarAc(this)">
+				<input type="submit" value="Enviar">
+					<!-- Rounded switch -->
+					<label class="switch">
+					  <input type="checkbox" id="acCheckBox">
+					  <div class="slider round"></div>
+					</label>
+				</form>
+			</div>
+			<div id="center_col">
+				<div id="wrap">
+					<h2>Temperatura y del luminosidad</h2>
+					<div id="first_col">
+						<h3>Luminosidad</h3>
+						<div id="luminosidad"></div>
+					</div>
+					<div id="second_col">
+						<h3>Temperatura</h3>
+						<div id="temperatura"></div>
+					</div>
+				</div>
+			</div>
+			<div id="right_col">
+				<div id="wrap">
+					<h2>Alertas</h2>
+					<div id="first_col">
+						<h3>Temperatura</h3>
+						<div id="alertaTemperatura"></div>
+					</div>
+					<div id="second_col">
+						<h3>Luminosidad</h3>
+						<div id="alertaLuminosidad"></div>
+					</div>
+					<div id="alertaDatos"></div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

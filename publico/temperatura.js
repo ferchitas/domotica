@@ -6,7 +6,7 @@ socket.on('temperatura-historico-sensor', function (data) {
 
 function mandarTemperatura(event) {
 	var payload = {
-		temperatura: document.getElementById('temperatura').value,
+		estado: document.getElementById('temperatura').value,
 		fecha: new Date()
 	};
 	socket.emit('temperatura-sensor-actual', payload);
@@ -18,7 +18,7 @@ function renderTemperatura(data) {
 	var html = data.map(function (data, index) {
 		return(`<div">
 				<strong>${data.fecha}</strong>
-				<em>${data.temperatura}</em>
+				<em>${data.estado}</em>
 				<br/>
 			</div>`); 
 	}).join(" ");

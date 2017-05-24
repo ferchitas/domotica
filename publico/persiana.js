@@ -1,7 +1,6 @@
 var socket4 = io.connect('http://localhost:8080');
 
 socket4.on('estado-historico-persiana', function (data) {
-	console.log("hola");
 	renderPersiana(data);
 });
 
