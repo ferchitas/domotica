@@ -70,22 +70,7 @@ mongoClient.connect("mongodb://127.0.0.1:27017/domotica", function(err, db) {
 			//sensor de temperatura
 			socket.on('temperatura-sensor-actual', function (data) {
 				// aqui guardamos los datos en la bdd, de momento utilizamos el array
-				//almaceno en la base de datos
-				var payload = {
-
-						sensor: "temperatura",
-						fecha: data.fecha,
-						estado: data.estado
-					}
-					collection.insert(payload, {safe:true}, function(err, result) {});
-					collection.find(payload).toArray(function(err, results){
-
-						console.log(results);
-					});
 				
-				socket.on('obtener', function (results) {
-					console.log(results);
-				})
 				temperaturas.push(data);
 				io.sockets.emit('ultima-temperatura', temperaturas[temperaturas.length - 1]);
 				socket.emit('temperatura-historico-sensor', temperaturas);
@@ -113,6 +98,32 @@ mongoClient.connect("mongodb://127.0.0.1:27017/domotica", function(err, db) {
 			});
 			socket.on('alerta-temperatura', function (data) {
 				io.sockets.emit('alerta-temperatura', data);
+				console.log(data);
+				if(data.persiana == '2') {
+					var estadoPersiana = {
+						estado: false
+					};
+					console.log(estadoPersiana);
+					io.sockets.emit('cambiar-estado-persiana', estadoPersiana);
+					data.estado = parseInt(data.temperatura) - 2;
+					temperaturas.push(data);
+					io.sockets.emit('ultima-temperatura-alerta', temperaturas[temperaturas.length - 1]);
+					//socket.emit('temperatura-historico-sensor', temperaturas);
+
+				}
+				else if(data.persiana == '3'){
+
+					var estadoPersiana = {
+						estado: true
+					};
+					io.sockets.emit('cambiar-estado-persiana', estadoPersiana);
+					data.estado = parseInt(data.temperatura) + 2;
+					console.log(estadoPersiana);
+					temperaturas.push(data);
+					io.sockets.emit('ultima-temperatura-alerta', temperaturas[temperaturas.length - 1]);
+					socket.emit('temperatura-historico-sensor', temperaturas);
+					
+				}
 			});
 			socket.on('alerta-ultimos-datos', function (data) {
 				io.sockets.emit('alerta-ultimos-datos', data);
@@ -132,29 +143,5 @@ mongoClient.connect("mongodb://127.0.0.1:27017/domotica", function(err, db) {
 		});
 	});
 });
-/*
-//conexion a la bdd
-var mongoClient = new MongoClient(new MongoServer('127.0.0.1', 27017));
-mongoClient.connect("mongodb://127.0.0.1:27017/domotica", function(err, db) {
-	http.listen(8080, function () {
-		console.log("servidor en 127.0.0.1:8080");
-	});
-	
-	db.createCollection("test", function(err, collection){
-    	io.sockets.on('connection',
-		function(client) {
-			client.emit('my-address', {host:client.request.connection.remoteAddress, port:client.request.connection.remotePort});
-			client.on('poner', function (data) {
-				collection.insert(data, {safe:true}, function(err, result) {});
-			});
-			client.on('obtener', function (data) {
-				collection.find(data).toArray(function(err, results){
-					client.emit('obtener', results);
-				});
-			});
-		});
-    });
-});
-*/
 
 console.log("Servicio MongoDB iniciado");

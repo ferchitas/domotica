@@ -14,6 +14,12 @@ socket2.on('cambiar-estado-ac', function (data) {
 
 socket2.on('ultima-temperatura', function (data) {
 	renderTemperatura(data);
+
+});
+
+socket2.on('ultima-temperatura-alerta', function (data) {
+	renderTemperatura(data);
+
 });
 
 socket2.on('ultima-luminosidad', function (data) {
@@ -26,6 +32,7 @@ socket2.on('alerta-luminosidad', function (data) {
 
 socket2.on('alerta-temperatura', function (data) {
 	renderAlertaTemperatura(data);
+
 });
 
 socket2.on('alerta-ultimos-datos', function (data) {
@@ -39,7 +46,6 @@ function cambiarPersiana(event) {
 		estado: document.getElementById('persianaCheckBox').checked,
 		fecha: new Date()
 	};
-	console.log(payload);
 	socket2.emit('usuarios-estado-persiana', payload);
 	return false;
 }

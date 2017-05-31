@@ -1,6 +1,6 @@
 var socket = io.connect('http://localhost:8080', {'forceNew': true});
 
-socket.on('temperatura-historico-sensor', function (data) {
+socket.on('temperatura-historico-sensor-alerta', function (data) {
 	renderTemperatura(data);
 });
 
